@@ -35,7 +35,7 @@ ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -std=c++20
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS += -framework IOKit
+LIBS += -framework Cocoa -framework IOKit
 LDDEPS +=
 ALL_LDFLAGS += $(LDFLAGS)
 LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -47,14 +47,14 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
-TARGETDIR = ../bin/Debug-macosx-ARM64LearnOpenGL
+TARGETDIR = ../bin/Debug-macosx-ARM64/LearnOpenGL
 TARGET = $(TARGETDIR)/LearnOpenGL
-OBJDIR = ../bin-int/Debug-macosx-ARM64LearnOpenGL
+OBJDIR = ../bin-int/Debug-macosx-ARM64/LearnOpenGL
 
 else ifeq ($(config),release)
-TARGETDIR = ../bin/Release-macosx-ARM64LearnOpenGL
+TARGETDIR = ../bin/Release-macosx-ARM64/LearnOpenGL
 TARGET = $(TARGETDIR)/LearnOpenGL
-OBJDIR = ../bin-int/Release-macosx-ARM64LearnOpenGL
+OBJDIR = ../bin-int/Release-macosx-ARM64/LearnOpenGL
 
 endif
 
@@ -65,6 +65,11 @@ endif
 # File sets
 # #############################################
 
+GENERATED :=
+OBJECTS :=
+
+GENERATED += $(OBJDIR)/Application.o
+OBJECTS += $(OBJDIR)/Application.o
 
 # Rules
 # #############################################
@@ -72,7 +77,7 @@ endif
 all: $(TARGET)
 	@:
 
-$(TARGET): $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
+$(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
 	@echo Linking LearnOpenGL
 	$(SILENT) $(LINKCMD)
@@ -127,6 +132,10 @@ endif
 
 # File Rules
 # #############################################
+
+$(OBJDIR)/Application.o: src/Application.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))
