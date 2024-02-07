@@ -2,6 +2,8 @@
 Make
 Makefile
 .sln
+**/bin/**
+**/bin-int/**
 
 # Prerequisites
 *.d
