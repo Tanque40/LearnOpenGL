@@ -1,4 +1,5 @@
 workspace "LearnOpenGL"
+architecture "ARM64"
 
 configurations {
     "Debug",
@@ -14,19 +15,20 @@ language "C++"
 cppdialect "C++latest"
 staticruntime "on"
 
-targetdir("bin/" .. outputdir .. "%{prj.name}")
-objdir("bin-int/" .. outputdir .. "%{prj.name}")
+targetdir("bin/" .. outputdir .. "/%{prj.name}")
+objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
 files {
     "%{prj.location}/src/**.h",
-    "${prj.location}/src/**.cpp"
+    "%{prj.location}/src/**.cpp",
+}
+
+links {
+    "Cocoa.framework",
+    "IOKit.framework"
 }
 
 filter "system:macosx"
-architecture "ARM64"
-links {
-    "IOKit.framework"
-}
 
 filter "configurations:Debug"
 runtime "Debug"
