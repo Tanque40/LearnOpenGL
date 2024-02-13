@@ -1,5 +1,4 @@
-[Índice](README.md)
-
+Anterior | [Índice](README.md) | [Siguiente]()
 ___
 
 # Bienvenido a OpenGL
@@ -8,4 +7,8 @@ ___
 
 ## ¿Porqué leer estos capítulos?
 
-A través del internet hay miles de documentos, libros y recursos sobre aprender _OpenGL_.
+A través del internet hay miles de documentos, libros y recursos sobre aprender _OpenGL_, sin embargo, la mayoría de estos recursos están enfocados en el modo inmediato de _OpenGL_ (comunmente conocido como el viejo OpenGL), están incompletos, carecen de la documentación adecuada
+
+___
+
+Anterior | [Índice](README.md) | [Siguiente]()
